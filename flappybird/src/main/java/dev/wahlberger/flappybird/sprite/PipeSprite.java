@@ -1,17 +1,15 @@
 package dev.wahlberger.flappybird.sprite;
 
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 public class PipeSprite extends JPanel {
     public enum PipeDirection {
@@ -43,9 +41,8 @@ public class PipeSprite extends JPanel {
         String pipePath = this.direction == PipeDirection.Bottom ? BOTTOM_PIPE_PATH : TOP_PIPE_PATH;
 
         if (pipeImage == null) {
-            URL res = getClass().getClassLoader().getResource(pipePath);
-            File pipeFile = Paths.get(res.toURI()).toFile();
-            pipeImage = ImageIO.read(pipeFile);
+            InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(pipePath);
+            pipeImage = ImageIO.read(resourceStream);
         }
     }
     

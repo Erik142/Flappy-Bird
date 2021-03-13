@@ -1,18 +1,15 @@
 package dev.wahlberger.flappybird.sprite;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
-
-import java.awt.Image;
-import java.awt.Graphics2D;
-import java.awt.Graphics;
-import java.awt.Point;
 
 public class GameOverSprite {
     private final String IMAGE_PATH = "gameover.png";
@@ -28,9 +25,9 @@ public class GameOverSprite {
     }
 
     private BufferedImage getImage() throws URISyntaxException, IOException {
-        URL res = getClass().getClassLoader().getResource(IMAGE_PATH);
-        File birdFile = Paths.get(res.toURI()).toFile();
-        BufferedImage image = ImageIO.read(birdFile);
+        InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(IMAGE_PATH);
+
+        BufferedImage image = ImageIO.read(resourceStream);
         Image scaledImage = image.getScaledInstance((int)(SCALE_FACTOR*image.getWidth()), (int)(SCALE_FACTOR*image.getHeight()), BufferedImage.SCALE_SMOOTH);
         BufferedImage newImage = new BufferedImage(scaledImage.getWidth(null), scaledImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 

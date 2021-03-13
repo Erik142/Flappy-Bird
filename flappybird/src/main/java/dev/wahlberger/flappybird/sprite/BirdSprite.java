@@ -1,19 +1,16 @@
 package dev.wahlberger.flappybird.sprite;
 
-import javax.imageio.ImageIO;
-
-
-import java.awt.image.BufferedImage;
-import java.awt.Image;
-import java.awt.Graphics2D;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class BirdSprite {
 
@@ -84,9 +81,8 @@ public class BirdSprite {
     }
 
     private BufferedImage getImage(String path) throws URISyntaxException, IOException {
-        URL res = getClass().getClassLoader().getResource("" + this.color.toString().toLowerCase() + path);
-        File birdFile = Paths.get(res.toURI()).toFile();
-        BufferedImage image = ImageIO.read(birdFile);
+        InputStream resourceStream = getClass().getClassLoader().getResourceAsStream("" + this.color.toString().toLowerCase() + path);
+        BufferedImage image = ImageIO.read(resourceStream);
         Image scaledImage = image.getScaledInstance((int)(SCALE_FACTOR*image.getWidth()), (int)(SCALE_FACTOR*image.getHeight()), BufferedImage.SCALE_SMOOTH);
         BufferedImage newImage = new BufferedImage(scaledImage.getWidth(null), scaledImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 

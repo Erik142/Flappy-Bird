@@ -1,6 +1,7 @@
 package dev.wahlberger.flappybird.model;
 
 import java.awt.Point;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -167,7 +168,7 @@ public class GameModel extends AbstractObservable<GameModel> {
         try {
             Clip clip = AudioSystem.getClip();
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-            getClass().getClassLoader().getResourceAsStream(path));
+            new BufferedInputStream(getClass().getClassLoader().getResourceAsStream(path)));
             clip.open(inputStream);
             clip.start(); 
         } catch (Exception e) {

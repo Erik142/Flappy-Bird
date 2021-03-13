@@ -1,11 +1,11 @@
 package dev.wahlberger.flappybird.sprite;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Scoreboard {
     private final int PADDING = 3;

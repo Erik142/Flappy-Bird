@@ -1,14 +1,11 @@
 package dev.wahlberger.flappybird.view;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 import javax.swing.Action;
@@ -46,17 +43,15 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
 
     private void loadBackground() throws URISyntaxException, IOException {
         if (backgroundImage == null) {
-            URL res = GamePanel.class.getClassLoader().getResource(BACKGROUND_PATH);
-		    File backgroundFile = Paths.get(res.toURI()).toFile();
-            backgroundImage = ImageIO.read(backgroundFile);
+            InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(BACKGROUND_PATH);
+            backgroundImage = ImageIO.read(resourceStream);
         }
     }
 
     private void loadFloor() throws URISyntaxException, IOException {
         if (floorImage == null) {
-            URL res = getClass().getClassLoader().getResource(FLOOR_PATH);
-            File floorFile = Paths.get(res.toURI()).toFile();
-            floorImage = ImageIO.read(floorFile);
+            InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(FLOOR_PATH);
+            floorImage = ImageIO.read(resourceStream);
         }
     }
 
