@@ -20,6 +20,9 @@ import javax.swing.KeyStroke;
 import dev.wahlberger.flappybird.model.GameModel;
 import dev.wahlberger.flappybird.observer.Observer;
 import dev.wahlberger.flappybird.sprite.BirdSprite;
+import dev.wahlberger.flappybird.sprite.GameOverSprite;
+import dev.wahlberger.flappybird.sprite.PipePairSprite;
+import dev.wahlberger.flappybird.sprite.Scoreboard;
 
 public class GamePanel extends JPanel implements Observer<GameModel> {
     private final String BACKGROUND_PATH = "background.png";
@@ -62,16 +65,36 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
         super.paintComponent(g);
 
         g.drawImage(backgroundImage, 0, 0, null);
-        g.drawImage(floorImage, 0, parentFrame.getHeight() - floorImage.getHeight(), null);
+        g.drawImage(floorImage, 0, (int)getFloorPosition(), null);
 
         BirdSprite bird = gameModel.getBird();
-
-        if (bird != null) {
-            Point birdPosition = bird.getPosition();
-            bird.draw(g);
-            //g.drawImage(bird.getImage(), birdPosition.x, birdPosition.y, null);
-            //paint(bird.getGraphics());
+        
+        PipePairSprite[] pipes = gameModel.getPipes();
+        
+        if (pipes != null) {
+            for (PipePairSprite sprite : pipes) {
+                if (sprite != null) {
+                    sprite.paint(g);
+                }
+            }
         }
+        
+        if (bird != null) {
+            bird.draw(g);
+        }
+        
+        Scoreboard scoreboard = gameModel.getScoreBoard();
+ 
+        if (scoreboard != null) {
+            scoreboard.paint(g);
+        }
+
+        if (bird != null && bird.isCrashed()) {
+            GameOverSprite gameOverSprite = gameModel.getGameOverSprite();
+
+            gameOverSprite.paint(g);
+        }
+        
     }
 
     @Override
@@ -85,7 +108,7 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
     }
 
     private void setKeyBindings(Action keyAction) {
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "Jump");
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), "Jump");
         getActionMap().put("Jump", keyAction);
     }
 

@@ -1,7 +1,6 @@
 package dev.wahlberger.flappybird.view;
 
 import java.awt.Container;
-import java.awt.Point;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -9,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import dev.wahlberger.flappybird.model.GameModel;
-import dev.wahlberger.flappybird.sprite.BirdSprite;
 import dev.wahlberger.flappybird.util.FrameUtil;
 
 public class MainWindow extends JFrame {
@@ -33,8 +31,8 @@ public class MainWindow extends JFrame {
 
     private void createFrame() {
         Container contentPane = this.getContentPane();
-        contentPane.add(gamePanel);
         //contentPane.add(mainMenuPanel);
+        contentPane.add(gamePanel);
 
         this.setVisible(true);
         this.setResizable(false);

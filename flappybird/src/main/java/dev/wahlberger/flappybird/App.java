@@ -37,11 +37,16 @@ public final class App {
         GamePanel gamePanel = mainWindow.getGamePanel();
 
         gameModel.createBird(birdPosition, gamePanel.getFloorPosition());
+        gameModel.createScoreboard(mainWindow.getWidth());
+        gameModel.createGameOverScreen(mainWindow.getWidth());
+        
+        System.out.println("Floor position: " + gamePanel.getFloorPosition());
+        gameModel.createPipes((int)(gamePanel.getFloorPosition()), mainWindow.getWidth());
         gameModel.addObserver(gamePanel);
 
         mainMenuPanel.registerListeners(mainMenuActionListener);
         gamePanel.registerListeners(gameKeyAction);
 
-        gameModel.startGravity();
+        gameModel.startGame();
     }
 }
