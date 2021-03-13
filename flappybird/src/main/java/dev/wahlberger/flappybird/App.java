@@ -1,8 +1,7 @@
 package dev.wahlberger.flappybird;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.awt.Point;
+import java.net.URISyntaxException;
 
 import dev.wahlberger.flappybird.controller.GameKeyAction;
 import dev.wahlberger.flappybird.controller.MainMenuActionListener;
@@ -23,30 +22,33 @@ public final class App {
      * @param args The arguments of the program.
      * @throws URISyntaxException
      */
-    public static void main(String[] args) throws URISyntaxException, IOException {
-        GameModel gameModel = new GameModel();
+    public static void main(String[] args) {
+        try {
+            GameModel gameModel = new GameModel();
 
-        MainWindow mainWindow = new MainWindow(gameModel);
-        
-        Point birdPosition = new Point((int)(mainWindow.getWidth() / 2), (int)(mainWindow.getHeight() / 2));
-        
-        MainMenuActionListener mainMenuActionListener = new MainMenuActionListener(mainWindow);
-        GameKeyAction gameKeyAction = new GameKeyAction(gameModel);
+            MainWindow mainWindow = new MainWindow(gameModel);
+            
+            Point birdPosition = new Point((int)(mainWindow.getWidth() / 2), (int)(mainWindow.getHeight() / 2));
+            
+            MainMenuActionListener mainMenuActionListener = new MainMenuActionListener(mainWindow);
+            GameKeyAction gameKeyAction = new GameKeyAction(gameModel);
 
-        MainMenuPanel mainMenuPanel = mainWindow.getMainMenuPanel();
-        GamePanel gamePanel = mainWindow.getGamePanel();
+            MainMenuPanel mainMenuPanel = mainWindow.getMainMenuPanel();
+            GamePanel gamePanel = mainWindow.getGamePanel();
 
-        gameModel.createBird(birdPosition, gamePanel.getFloorPosition());
-        gameModel.createScoreboard(mainWindow.getWidth());
-        gameModel.createGameOverScreen(mainWindow.getWidth());
-        
-        System.out.println("Floor position: " + gamePanel.getFloorPosition());
-        gameModel.createPipes((int)(gamePanel.getFloorPosition()), mainWindow.getWidth());
-        gameModel.addObserver(gamePanel);
+            gameModel.createBird(birdPosition, gamePanel.getFloorPosition());
+            gameModel.createScoreboard(mainWindow.getWidth());
+            gameModel.createGameOverScreen(mainWindow.getWidth());
+            
+            gameModel.createPipes((int)(gamePanel.getFloorPosition()), mainWindow.getWidth());
+            gameModel.addObserver(gamePanel);
 
-        mainMenuPanel.registerListeners(mainMenuActionListener);
-        gamePanel.registerListeners(gameKeyAction);
+            mainMenuPanel.registerListeners(mainMenuActionListener);
+            gamePanel.registerListeners(gameKeyAction);
 
-        gameModel.startGame();
+            gameModel.startGame();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
