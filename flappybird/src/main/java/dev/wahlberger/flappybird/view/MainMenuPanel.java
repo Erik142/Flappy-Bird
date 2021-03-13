@@ -1,14 +1,14 @@
 package dev.wahlberger.flappybird.view;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import dev.wahlberger.flappybird.controller.MainMenuActionListener;
-
-import java.awt.event.ActionListener;
-import java.awt.Insets;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 
 public class MainMenuPanel extends JPanel {
 

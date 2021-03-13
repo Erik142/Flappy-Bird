@@ -1,6 +1,7 @@
 package dev.wahlberger.flappybird.controller;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 import dev.wahlberger.flappybird.model.GameModel;

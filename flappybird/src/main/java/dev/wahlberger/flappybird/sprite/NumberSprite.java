@@ -1,13 +1,13 @@
 package dev.wahlberger.flappybird.sprite;
 
-import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
 
 import javax.imageio.ImageIO;
 

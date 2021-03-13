@@ -1,7 +1,8 @@
 package dev.wahlberger.flappybird.util;
 
-import java.awt.Toolkit;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 
 public class FrameUtil {
