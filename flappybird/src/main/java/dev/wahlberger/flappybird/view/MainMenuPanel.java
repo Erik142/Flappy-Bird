@@ -1,7 +1,6 @@
 package dev.wahlberger.flappybird.view;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import dev.wahlberger.flappybird.controller.MainMenuActionListener;
