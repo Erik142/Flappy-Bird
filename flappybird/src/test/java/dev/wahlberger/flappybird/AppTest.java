@@ -1,4 +1,4 @@
-package dev.wahlberger;
+package dev.wahlberger.flappybird;
 
 import org.junit.jupiter.api.Test;
 
