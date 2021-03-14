@@ -103,7 +103,7 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
     }
 
     private void setKeyBindings(Action keyAction) {
-        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), "Jump");
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), "Jump");
         getActionMap().put("Jump", keyAction);
     }
 
