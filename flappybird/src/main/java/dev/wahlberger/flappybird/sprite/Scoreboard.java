@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Scoreboard {
     private final int PADDING = 3;
     private final double SCALING_FACTOR = 1.5;
 
-    private List<NumberSprite> numbers = new ArrayList<NumberSprite>();
+    private Queue<NumberSprite> numbers = new ConcurrentLinkedQueue<NumberSprite>();
 
     private int currentScore = 0;
   
@@ -42,6 +44,7 @@ public class Scoreboard {
 
         String numbersString = "" + currentScore;
         char[] numbersChars = numbersString.toCharArray();
+        NumberSprite previousSprite = null;
 
         for (int i = 0; i < numbersChars.length; i++) {
             char c = numbersChars[i];
@@ -62,12 +65,13 @@ public class Scoreboard {
                 }
             }
             else {
-                xPos = numbers.get(i-1).getPosition().x + numbers.get(i-1).getImage().getWidth() + PADDING;
+                xPos = previousSprite.getPosition().x + previousSprite.getImage().getWidth() + PADDING;
             }
 
             sprite.setPosition(new Point(xPos, scoreboardHeight));
 
             numbers.add(sprite);
+            previousSprite = sprite;
         }
     }
 
