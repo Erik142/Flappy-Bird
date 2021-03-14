@@ -12,6 +12,10 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import dev.wahlberger.flappybird.config.ConfigFactory;
+import dev.wahlberger.flappybird.config.Configuration;
+import dev.wahlberger.flappybird.config.Configuration.AppMode;
+
 public class BirdSprite {
 
     public enum BirdColor {
@@ -139,10 +143,17 @@ public class BirdSprite {
     }
     
     public void detectCollision(PipePairSprite pipes) {
-        double actualXPosition = this.position.x - Math.sin(currentAngle)*this.currentImage.getHeight();
-        double actualYPosition = this.position.y;
-        double actualWidth = Math.cos(currentAngle)*this.currentImage.getWidth() + Math.sin(currentAngle)*this.currentImage.getHeight();
-        double actualHeight = Math.cos(currentAngle)*this.currentImage.getHeight() + Math.sin(currentAngle)*this.currentImage.getWidth();
+        double actualXPosition = this.position.x + COLLISION_PADDING;
+        double actualYPosition = this.position.y + COLLISION_PADDING;
+
+        if (currentAngle < 0) {
+            actualYPosition -= this.getImage().getWidth()*Math.sin(Math.toRadians(Math.abs(currentAngle)));
+        } else {
+            actualXPosition -= Math.sin(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getHeight();
+        }
+
+        double actualWidth = Math.cos(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getWidth() + Math.sin(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getHeight() - COLLISION_PADDING;
+        double actualHeight = Math.cos(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getHeight() + Math.sin(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getWidth() - COLLISION_PADDING;
 
         if (pipes.getXPosition() <= (actualXPosition + actualWidth)) {
            double minYAllowed = pipes.getTopPipe().getPosition().y + pipes.getTopPipe().getImage().getHeight();
@@ -176,13 +187,21 @@ public class BirdSprite {
             return;
         }
 
+        double actualYPosition = this.position.y + COLLISION_PADDING;
+
+        if (currentAngle < 0) {
+            actualYPosition -= this.getImage().getWidth()*Math.sin(Math.toRadians(Math.abs(currentAngle)));
+        }
+
+        double actualHeight = Math.cos(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getHeight() + Math.sin(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getWidth() - COLLISION_PADDING;
+
         velocity += acceleration;
 
-        if ((this.position.y - COLLISION_PADDING + velocity) < 0) {
+        if ((actualYPosition + velocity) < 0) {
             this.position.y = 0;
         }
-        else if ((this.position.y + Math.sin(currentAngle)*this.getImage().getWidth() + Math.cos(currentAngle)*this.getImage().getHeight() - COLLISION_PADDING) + velocity >= floorPosition) {
-            //this.position.y = (int)(floorPosition - Math.sin(currentAngle)*this.getImage().getWidth() - Math.cos(currentAngle)*this.getImage().getHeight() + COLLISION_PADDING);
+        else if ((actualYPosition + actualHeight) + velocity >= floorPosition) {
+            this.position.y += velocity;
             isCrashed = true;
             isJumpEnabled = false;
             isGravityEnabled = false;
@@ -199,7 +218,25 @@ public class BirdSprite {
 
     public void draw(Graphics g) {
         Graphics2D graphics = (Graphics2D)g;
-        rotateImage(graphics, currentAngle); 
+        rotateImage(graphics, currentAngle);       
+        
+        Configuration config = ConfigFactory.getConfiguration();
+
+        if (config != null && config.getAppMode() == AppMode.Debug) {
+            double actualXPosition = this.position.x + COLLISION_PADDING;
+            double actualYPosition = this.position.y + COLLISION_PADDING;
+
+            if (currentAngle < 0) {
+                actualYPosition -= this.getImage().getWidth()*Math.sin(Math.toRadians(Math.abs(currentAngle)));
+            } else {
+                actualXPosition -= Math.sin(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getHeight();
+            }
+
+            double actualWidth = Math.cos(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getWidth() + Math.sin(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getHeight() - COLLISION_PADDING;
+            double actualHeight = Math.cos(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getHeight() + Math.sin(Math.toRadians(Math.abs(currentAngle)))*this.currentImage.getWidth() - COLLISION_PADDING;
+            
+            g.drawRect((int)actualXPosition, (int)actualYPosition, (int)actualWidth, (int)actualHeight); 
+        }
     }
 
     public BufferedImage getImage() {
