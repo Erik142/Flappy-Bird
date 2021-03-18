@@ -17,8 +17,10 @@ public class PipePairSprite {
     private PipeSprite topPipe = null;
    
     private final int totalHeight;
+    private final int initialXPos;
 
     public PipePairSprite(int totalHeight, int initialXPos) throws URISyntaxException, IOException {
+        this.initialXPos = initialXPos;
         Point position = new Point(initialXPos, 0);
         bottomPipe = new PipeSprite(PipeDirection.Bottom, (Point)position.clone());
         topPipe = new PipeSprite(PipeDirection.Top, (Point)position.clone());
@@ -79,8 +81,12 @@ public class PipePairSprite {
     }
 
     public void paint(Graphics g) {
-        //bottomPipe.draw(g);
         topPipe.draw(g);
         bottomPipe.draw(g);
+    }
+
+    public void reset() {
+        this.setXPosition(initialXPos);
+        this.generatePositions();
     }
 }

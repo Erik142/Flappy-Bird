@@ -53,7 +53,7 @@ public class BirdSprite {
 
     private boolean isGravityEnabled = false;
     private boolean isCrashed = false;
-    private boolean isJumpEnabled = true;
+    private boolean isJumpEnabled = false;
     private final double floorPosition;
 
     private final BirdColor color;
@@ -176,10 +176,12 @@ public class BirdSprite {
     
     public void startUpdatePosition() {
         isGravityEnabled = true;
+        this.isJumpEnabled = true;
     }
 
     public void stopUpdatePosition() {
         isGravityEnabled = false;
+        this.isJumpEnabled = false;
     }
     
     private void updatePosition(double acceleration) {
@@ -237,6 +239,13 @@ public class BirdSprite {
             
             g.drawRect((int)actualXPosition, (int)actualYPosition, (int)actualWidth, (int)actualHeight); 
         }
+    }
+
+    public void reset() {
+        this.position = (Point)initialPosition.clone();
+        this.currentAngle = 0;
+        this.velocity = 0;
+        this.isCrashed = false;
     }
 
     public BufferedImage getImage() {

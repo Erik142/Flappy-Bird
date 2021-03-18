@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.channels.Pipe;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -79,7 +80,7 @@ public class GameModel extends AbstractObservable<GameModel> {
     }
 
     public void performJump() {
-        if (!bird.isCrashed()) {
+        if (!bird.isCrashed() && bird.isGravityEnabled()) {
             bird.performJump();
             new Thread(() -> {
                 playSound("wing.wav");
@@ -103,6 +104,30 @@ public class GameModel extends AbstractObservable<GameModel> {
 
     public void startGame() {
         this.gameThread = new Thread(() -> {
+            try {
+                scoreBoard.resetScore();
+            } catch (URISyntaxException | IOException e1) {
+                e1.printStackTrace();
+                return;
+            }
+
+            for (PipePairSprite pipe : pairSprites) {
+                pipe.reset();
+            }
+
+            bird.reset();
+
+            lastPipe = pairSprites[pairSprites.length - 1];
+            nextPipe = pairSprites[0];
+
+            updateObservers(this);
+
+            for (PipePairSprite sprite : pairSprites) {
+                sprite.startMove();
+            }
+
+            bird.startUpdatePosition();
+
             boolean playedSound = false;
             int currentUpdate = 0;
             while (bird.isGravityEnabled()) {
@@ -121,6 +146,10 @@ public class GameModel extends AbstractObservable<GameModel> {
                         playSound("hit.wav");
                         playSound("die.wav");
                         playedSound = true;
+
+                        for (PipePairSprite pipe : pairSprites) {
+                            pipe.stopMove();
+                        }
                     }
                 }
 
@@ -157,19 +186,16 @@ public class GameModel extends AbstractObservable<GameModel> {
                 currentUpdate += 1;
             }
 
+            bird.stopUpdatePosition();
+
             if (bird.isCrashed() && !playedSound) {
                 if (bird.isCrashed()) {
                     playSound("hit.wav");
                     playSound("die.wav");
                 }
             }
-        });
+        }); 
 
-        for (PipePairSprite sprite : pairSprites) {
-            sprite.startMove();
-        } 
-
-        bird.startUpdatePosition();
         gameThread.start();
     }
 
