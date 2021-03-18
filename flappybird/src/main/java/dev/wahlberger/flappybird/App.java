@@ -42,8 +42,6 @@ public final class App {
             gameModel.addObserver(gamePanel);
 
             mainMenuPanel.registerListeners(mainMenuActionListener);
-
-            gameModel.startGame();
         } catch (Exception e) {
             e.printStackTrace();
         }
