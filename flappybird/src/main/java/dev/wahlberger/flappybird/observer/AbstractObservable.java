@@ -1,12 +1,13 @@
 package dev.wahlberger.flappybird.observer;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 public abstract class AbstractObservable<T> implements Observable<T> {
     private final Collection<Observer<T>> observers;
-    private final T observable;
 
-    public AbstractObservable(T observable) {
-        this.observers = new HashSet<T>();
-        this.observable = observable;
+    public AbstractObservable() {
+        this.observers = new HashSet<Observer<T>>();
     }
 
     @Override
@@ -19,9 +20,9 @@ public abstract class AbstractObservable<T> implements Observable<T> {
         this.observers.remove(observer);
     }
 
-    public void updateObservers() {
+    public void updateObservers(T observable) {
         for (Observer<T> observer : this.observers) {
-            observer.update(this.observable);
+            observer.update(observable);
         }
     }
 }
