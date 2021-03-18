@@ -1,6 +1,7 @@
 package dev.wahlberger.flappybird.view;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -39,6 +41,7 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
 
         loadBackground();
         loadFloor();
+        setKeyBindings();
     }
 
     private void loadBackground() throws URISyntaxException, IOException {
@@ -98,13 +101,29 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
         this.repaint();
     }
     
-    public void registerListeners(Action keyAction) {
-        setKeyBindings(keyAction);
-    }
-
-    private void setKeyBindings(Action keyAction) {
+    private void setKeyBindings() {
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), "Jump");
-        getActionMap().put("Jump", keyAction);
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true), "StartGame");
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true), "PauseGame");
+        
+
+        getActionMap().put("Jump", new AbstractAction(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.performJump();
+            }
+            
+        });
+
+        getActionMap().put("StartGame", new AbstractAction(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameModel.startGame();
+            }
+            
+        });
     }
 
     public double getFloorPosition() {

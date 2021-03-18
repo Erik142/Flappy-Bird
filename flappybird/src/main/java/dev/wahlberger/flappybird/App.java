@@ -3,7 +3,6 @@ package dev.wahlberger.flappybird;
 import java.awt.Point;
 import java.net.URISyntaxException;
 
-import dev.wahlberger.flappybird.controller.GameKeyAction;
 import dev.wahlberger.flappybird.controller.MainMenuActionListener;
 import dev.wahlberger.flappybird.model.GameModel;
 import dev.wahlberger.flappybird.view.GamePanel;
@@ -31,7 +30,6 @@ public final class App {
             Point birdPosition = new Point((int)(mainWindow.getWidth() / 2), (int)(mainWindow.getHeight() / 2));
             
             MainMenuActionListener mainMenuActionListener = new MainMenuActionListener(mainWindow);
-            GameKeyAction gameKeyAction = new GameKeyAction(gameModel);
 
             MainMenuPanel mainMenuPanel = mainWindow.getMainMenuPanel();
             GamePanel gamePanel = mainWindow.getGamePanel();
@@ -44,7 +42,6 @@ public final class App {
             gameModel.addObserver(gamePanel);
 
             mainMenuPanel.registerListeners(mainMenuActionListener);
-            gamePanel.registerListeners(gameKeyAction);
 
             gameModel.startGame();
         } catch (Exception e) {
