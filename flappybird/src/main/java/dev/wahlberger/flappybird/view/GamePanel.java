@@ -120,7 +120,9 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameModel.startGame();
+                if (gameModel.getBird().isCrashed() || !gameModel.getBird().isGravityEnabled()) {
+                    gameModel.startGame();
+                }
             }
             
         });
