@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/score', scorerouter)
-app.use('/user', userrouter)
+app.use('/v1/score', scorerouter)
+app.use('/v1/user', userrouter)
 
 app.listen(config.port, config.listenAddress)
