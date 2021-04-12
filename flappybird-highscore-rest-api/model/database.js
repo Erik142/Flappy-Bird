@@ -117,7 +117,9 @@ exports.updateScore = async function(usertoken, score) {
         let data = await sql`
             update public."score"
             set score = ${score}
-            where user_id = ${user.id}
+            from public."score" s
+            inner join public."user" u on u.id = s.user_id
+            where u.token = ${user.usertoken}
             
             returning *
         `
@@ -130,7 +132,7 @@ exports.updateScore = async function(usertoken, score) {
 
         return {
             usertoken: usertoken,
-            score: data[0].score,
+            score: score,
             result: true,
             error: ''
         }
@@ -194,7 +196,6 @@ exports.getUser = async function(usertoken) {
         }
 
         return {
-            id: data[0].id,
             username: data[0].username,
             usertoken: usertoken,
             result: true,
