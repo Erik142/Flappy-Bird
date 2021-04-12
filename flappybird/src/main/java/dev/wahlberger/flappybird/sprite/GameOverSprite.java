@@ -11,12 +11,14 @@ import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 
-public class GameOverSprite {
-    private final String IMAGE_PATH = "gameover.png";
+public class GameOverSprite extends AbstractSprite {
+    private final String IMAGE_PATH = "background/gameover.png";
     private final double SCALE_FACTOR = 2.0;
 
     private final BufferedImage image;
     private final Point position;
+    
+    private boolean isVisible = false;
 
     public GameOverSprite(Point position) throws URISyntaxException, IOException {
         this.image = getImage();
@@ -40,7 +42,13 @@ public class GameOverSprite {
         return image;
     }
 
+    public void setVisibility(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
     public void paint(Graphics g) {
-        g.drawImage(image, this.position.x, this.position.y, null);
+        if (isVisible) {
+            g.drawImage(image, this.position.x, this.position.y, null);
+        }
     }
 }

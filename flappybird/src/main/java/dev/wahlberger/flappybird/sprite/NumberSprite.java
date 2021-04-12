@@ -21,7 +21,7 @@ public class NumberSprite {
     } 
 
     private void loadImage(int number, double scalingFactor) throws URISyntaxException, IOException {
-        String imagePath = "" + number + ".png";
+        String imagePath = "number/" + number + ".png";
         
         if (image == null) {
             InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(imagePath);
