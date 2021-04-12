@@ -9,29 +9,30 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
-public class PipeSprite extends JPanel {
+public class PipeSprite extends AbstractSprite {
     public enum PipeDirection {
         Top,
         Bottom
     }
 
-    private final int SPEED = 1;
+    private final double SPEED = 1.25;
 
-    private final String BOTTOM_PIPE_PATH = "pipe_bottom.png";
-    private final String TOP_PIPE_PATH = "pipe_top.png";
+    private final String BOTTOM_PIPE_PATH = "pipe/pipe_bottom.png";
+    private final String TOP_PIPE_PATH = "pipe/pipe_top.png";
 
     private PipeDirection direction;
-    private Point position;
+    private double x;
+    private double y;
 
     private BufferedImage pipeImage = null;
 
     private boolean isMoving = true;
 
-    public PipeSprite(PipeDirection direction, Point position) throws URISyntaxException, IOException {
+    public PipeSprite(PipeDirection direction, int initialXPos) throws URISyntaxException, IOException {
         this.direction = direction;
-        this.position = position;
+
+        this.x = initialXPos;
 
         loadImage();
         setOpaque(false);
@@ -50,22 +51,26 @@ public class PipeSprite extends JPanel {
         return pipeImage;
     }
 
-    public Point getPosition() {
-        return this.position;
+    public double getXPosition() {
+        return this.x;
+    }
+    
+    public double getYPosition() {
+        return this.y;
     }
 
-    public void setXPosition(int x) {
-        this.position.x = x;
+    public void setXPosition(double x) {
+        this.x = x;
     }
-
-    public void setPosition(int x, int y, boolean debug) {
-        this.position.x = x;
-        this.position.y = y;
+    
+    public void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
     public void updatePosition() {
         if (this.isMoving) {
-            this.position.x -= SPEED;
+            this.x -= SPEED;
         }
     }
 
@@ -82,7 +87,8 @@ public class PipeSprite extends JPanel {
         return new Dimension(pipeImage.getWidth(), pipeImage.getHeight());
     }
 
-    public void draw(Graphics g) {
-        g.drawImage(pipeImage, this.position.x, this.position.y, this);
+    @Override
+    public void paint(Graphics g) {
+        g.drawImage(pipeImage, (int)this.x, (int)this.y, this);
     }
 }

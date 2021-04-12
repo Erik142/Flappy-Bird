@@ -1,0 +1,23 @@
+{
+  "name": "flappybird-highscore-rest-api",
+  "version": "0.0.1",
+  "description": "This package is a RESTful api used to retrieve and add high scores to the flappy bird project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Erik142/Flappy-Bird.git"
+  },
+  "author": "Erik Wahlberger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Erik142/Flappy-Bird/issues"
+  },
+  "homepage": "https://github.com/Erik142/Flappy-Bird#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "postgres": "^1.0.2"
+  }
+}

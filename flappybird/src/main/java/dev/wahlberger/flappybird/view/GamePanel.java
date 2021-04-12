@@ -3,68 +3,37 @@ package dev.wahlberger.flappybird.view;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import dev.wahlberger.flappybird.model.GameModel;
+import dev.wahlberger.flappybird.model.GamePanelModel;
 import dev.wahlberger.flappybird.observer.Observer;
-import dev.wahlberger.flappybird.sprite.BirdSprite;
-import dev.wahlberger.flappybird.sprite.GameOverSprite;
-import dev.wahlberger.flappybird.sprite.PipePairSprite;
-import dev.wahlberger.flappybird.sprite.Scoreboard;
 
 public class GamePanel extends JPanel implements Observer<GameModel> {
-    private final String BACKGROUND_PATH = "background.png";
-    private final String FLOOR_PATH = "floor.png";
-
-    private final JFrame parentFrame;
-
-    private BufferedImage backgroundImage = null;
-    private BufferedImage floorImage = null;
-
     private final GameModel gameModel;
+    private final GamePanelModel gamePanelModel;
 
-    public GamePanel(JFrame parentFrame, GameModel gameModel) throws URISyntaxException, IOException {
-        this.parentFrame = parentFrame;
-
+    public GamePanel(GamePanelModel gamePanelModel, GameModel gameModel) throws URISyntaxException, IOException {
+        this.gamePanelModel = gamePanelModel;
         this.gameModel = gameModel;
 
-        loadBackground();
-        loadFloor();
         setKeyBindings();
-    }
-
-    private void loadBackground() throws URISyntaxException, IOException {
-        if (backgroundImage == null) {
-            InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(BACKGROUND_PATH);
-            backgroundImage = ImageIO.read(resourceStream);
-        }
-    }
-
-    private void loadFloor() throws URISyntaxException, IOException {
-        if (floorImage == null) {
-            InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(FLOOR_PATH);
-            floorImage = ImageIO.read(resourceStream);
-        }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.drawImage(backgroundImage, 0, 0, null);
-        g.drawImage(floorImage, 0, (int)getFloorPosition(), null);
+        g.drawImage(gamePanelModel.getBackgroundImage(), 0, 0, null);
+        g.drawImage(gamePanelModel.getFloorImage(), 0, (int)gamePanelModel.getFloorPosition(), null);
 
+        /*
         BirdSprite bird = gameModel.getBird();
         
         PipePairSprite[] pipes = gameModel.getPipes();
@@ -78,7 +47,7 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
         }
         
         if (bird != null) {
-            bird.draw(g);
+            bird.paint(g);
         }
         
         Scoreboard scoreboard = gameModel.getScoreBoard();
@@ -91,6 +60,11 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
             GameOverSprite gameOverSprite = gameModel.getGameOverSprite();
 
             gameOverSprite.paint(g);
+        }
+        */
+
+        for (JPanel panel : gamePanelModel.getPanels()) {
+           panel.paint(g); 
         }
         
     }
@@ -120,15 +94,17 @@ public class GamePanel extends JPanel implements Observer<GameModel> {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*
                 if (gameModel.getBird().isCrashed() || !gameModel.getBird().isGravityEnabled()) {
+                    gameModel.startGame();
+                }
+                */
+
+                if (!gameModel.isStarted()) {
                     gameModel.startGame();
                 }
             }
             
         });
-    }
-
-    public double getFloorPosition() {
-        return parentFrame.getHeight() - floorImage.getHeight();
     }
 }

@@ -8,22 +8,23 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import dev.wahlberger.flappybird.model.GameModel;
+import dev.wahlberger.flappybird.model.GamePanelModel;
 import dev.wahlberger.flappybird.util.FrameUtil;
 
 public class MainWindow extends JFrame {
-    private final int WINDOW_WIDTH = 600;
-    private final int WINDOW_HEIGHT = 1000;
+    public static final int WINDOW_WIDTH = 600;
+    public static final int WINDOW_HEIGHT = 1000;
 
     private final MainMenuPanel mainMenuPanel;
     private final GamePanel gamePanel;
 
-    public MainWindow(GameModel gameModel) throws URISyntaxException, IOException {
+    public MainWindow(GameModel gameModel, GamePanelModel gamePanelModel) throws URISyntaxException, IOException {
         super("Flappy Bird");
        
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         
         mainMenuPanel = new MainMenuPanel();
-        gamePanel = new GamePanel(this, gameModel);
+        gamePanel = new GamePanel(gamePanelModel, gameModel);
 
         createFrame();
         FrameUtil.centerFrame(this);
