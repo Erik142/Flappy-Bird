@@ -46,7 +46,7 @@ public class PipesModel extends AbstractSpriteModel<PipesModel> implements Itera
       for (int i = 0; i < amount; i++) {
          PipePairSprite sprite = new PipePairSprite(FLOOR_POSITION, WINDOW_WIDTH + 300 + i*GAP_BETWEEN_PIPES);
          this.PIPES.add(sprite);
-     }
+      }
 
      lastPipe = this.PIPES.get(amount - 1);
      nextPipe = this.PIPES.get(0);
@@ -65,7 +65,7 @@ public class PipesModel extends AbstractSpriteModel<PipesModel> implements Itera
    }
 
    public Collection<PipePairSprite> getPipes() {
-      return Collections.unmodifiableList(PIPES);
+      return PIPES;
    }
    
    public void update() {
@@ -97,5 +97,14 @@ public class PipesModel extends AbstractSpriteModel<PipesModel> implements Itera
    @Override
    public Iterator<PipePairSprite> iterator() {
       return PIPES.iterator();
+   }
+
+   public void reset() {
+      for (PipePairSprite pipePair : PIPES) {
+         pipePair.reset();
+      }
+
+      nextPipe = PIPES.get(0);
+      lastPipe = PIPES.get(PIPES.size() - 1);
    }
 }

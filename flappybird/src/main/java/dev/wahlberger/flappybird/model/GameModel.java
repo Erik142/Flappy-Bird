@@ -60,9 +60,7 @@ public class GameModel extends AbstractObservable<GameModel> {
                 return;
             }
 
-            for (PipePairSprite pipe : PIPES_MODEL.getPipes()) {
-                pipe.reset();
-            }
+            PIPES_MODEL.reset();
 
             BIRD_MODEL.reset();
 
@@ -119,6 +117,10 @@ public class GameModel extends AbstractObservable<GameModel> {
                 long timeDiff = timeAfterUpdate - timeBeforeUpdate;
                 double sleepTime = 1000 / REFRESH_RATE;
                 long adjustedSleepTime = (long)(sleepTime - timeDiff);
+
+                if (adjustedSleepTime < 0) {
+                    adjustedSleepTime = 0;
+                }
 
                 try {
                     Thread.sleep(adjustedSleepTime);
