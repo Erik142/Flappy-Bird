@@ -1,7 +1,6 @@
 package dev.wahlberger.flappybird;
 
 import java.awt.Point;
-import java.net.URISyntaxException;
 
 import dev.wahlberger.flappybird.controller.MainMenuActionListener;
 import dev.wahlberger.flappybird.model.GameModel;

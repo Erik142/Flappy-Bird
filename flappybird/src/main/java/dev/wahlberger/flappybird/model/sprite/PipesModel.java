@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import dev.wahlberger.flappybird.model.AudioHandler;
 import dev.wahlberger.flappybird.sprite.PipePairSprite;
 
 public class PipesModel extends AbstractSpriteModel<PipesModel> implements Iterable<PipePairSprite> {

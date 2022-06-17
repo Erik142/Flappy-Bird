@@ -1,13 +1,7 @@
 package dev.wahlberger.flappybird.model;
 
-import java.awt.Point;
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 import dev.wahlberger.flappybird.model.AudioHandler.AudioType;
 import dev.wahlberger.flappybird.model.sprite.BirdModel;

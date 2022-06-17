@@ -1,6 +1,5 @@
 package dev.wahlberger.flappybird.model.sprite;
 
-import dev.wahlberger.flappybird.observer.AbstractObservable;
 import dev.wahlberger.flappybird.sprite.PipePairSprite;
 
 import java.awt.Point;

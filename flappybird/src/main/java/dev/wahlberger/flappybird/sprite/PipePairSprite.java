@@ -1,7 +1,6 @@
 package dev.wahlberger.flappybird.sprite;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Random;
